@@ -1,4 +1,6 @@
 const { validationResult } = require("express-validator");
+const bcrypt = require('bcryptjs');
+const jwt = require("jsonwebtoken");
 const model = require('../model/user');
 const User = model.User;
 
@@ -19,9 +21,25 @@ exports.createUser = async (req,res)=>{
         if(user){
             return res.status(400).json({error : "Sorry a user exist with same email id"});
         }
-        user = new User(req.body);
+
+        //Password Hashing...
+        const salt = await bcrypt.genSalt(10);
+        const secPass = await bcrypt.hash(req.body.password,salt);
+
+        user = new User();
+        user.name = req.body.name;
+        user.password = secPass;
+        user.email = req.body.email;
         await user.save();
-        res.json({success: "User added !Welcome!"});
+
+        const data = {
+            user:{
+                id: user.id
+            }
+        }
+        const authtoken = jwt.sign(data,process.env.JWT_SECRET);
+
+        res.json({authtoken});
     }catch(error){
         console.error(error.message);
         res.status(500).send("Some error occured");
