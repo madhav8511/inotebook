@@ -4,7 +4,6 @@ const bcrypt = require('bcryptjs');
 const jwt = require("jsonwebtoken");
 const model = require('../model/user');
 const User = model.User;
-const JWT_SECRET = "HelloIamagoodBoy";
 
 exports.getAlluser = async (req,res)=>{
     const user = await User.find();
@@ -77,3 +76,15 @@ exports.loginUser = async (req,res)=>{
         res.status(500).send("Internal Server error");
     }
 }
+
+exports.userbyId = async (req,res)=>{
+    try {
+        const userId = req.user.id;
+        const user = await User.findById(userId).select("-password");
+        res.send(user);
+    } catch (error) {
+        console.error(error.message);
+        res.status(500).send("Internal Server error");
+    }
+}
+
