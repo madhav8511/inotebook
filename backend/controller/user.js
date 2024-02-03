@@ -13,14 +13,15 @@ exports.getAlluser = async (req,res)=>{
 exports.createUser = async (req,res)=>{
     //Error checking that mention in router position...
     const errors = validationResult(req);
+    let success = false;
     if (!errors.isEmpty()) {
-      return res.status(400).json({error: errors.array() });
+      return res.status(400).json({success,error: errors.array() });
     }
     //Basic try catche block...
     try{
         let user = await User.findOne({email : req.body.email});
         if(user){
-            return res.status(400).json({error : "Sorry a user exist with same email id"});
+            return res.status(400).json({success,error : "Sorry a user exist with same email id"});
         }
 
         //Password Hashing...
@@ -38,8 +39,9 @@ exports.createUser = async (req,res)=>{
                 id: user.id
             }
         }
-        const authtoken = jwt.sign(data,process.env.JWT_SECRET);
-        res.json({authtoken});
+        const authtoken = jwt.sign(data,`${process.env.JWT_SECRET}`);
+        success = true;
+        res.json({success,authtoken});
     }catch(error){
         console.error(error.message);
         res.status(500).send("Some error occured");
@@ -48,8 +50,9 @@ exports.createUser = async (req,res)=>{
 
 exports.loginUser = async (req,res)=>{
     const errors = validationResult(req);
+    let success = false;
     if (!errors.isEmpty()) {
-      return res.status(400).json({error: errors.array() });
+      return res.status(400).json({error: errors.array()});
     }
 
     // const [email,password] = req.body;
@@ -58,19 +61,20 @@ exports.loginUser = async (req,res)=>{
     try {
         let user = await User.findOne({email});
         if(!user){
-            res.status(400).json({error:"Please try to login using correct credentials"});
+            res.status(400).json({success, error:"Please try to login using correct credentials"});
         }
         const passwordCompare = await bcrypt.compare(password,user.password);
         if(!passwordCompare){
-            res.status(400).json({error:"Please try to login using correct credentials"});
+            res.status(400).json({success, error:"Please try to login using correct credentials"});
         }
         const data = {
             user:{
                 id: user.id
             }
         }
-        const authtoken = jwt.sign(data,process.env.JWT_SECRET);
-        res.json({authtoken});
+        const authtoken = jwt.sign(data,`${process.env.JWT_SECRET}`);
+        success = true;
+        res.json({success,authtoken});
     } catch (error) {
         console.error(error.message);
         res.status(500).send("Internal Server error");

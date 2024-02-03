@@ -4,6 +4,7 @@ const express = require('express');
 const morgan = require('morgan');
 const userRouter = require('./routes/user');
 const notesRouter = require('./routes/notes');
+const cors = require('cors');
 
 //Data base Connection...
 main().catch(err => console.log(err));
@@ -14,10 +15,12 @@ async function main() {
 
 //Server connection...
 const server = express();
+server.use(cors());
 server.use(express.json({  extended: true })); 
 server.use(express.urlencoded({  extended: true }));
 server.use(morgan('default'));
 server.use(express.static('public'));
+
 
 
 server.use('/api/user',userRouter.router);
