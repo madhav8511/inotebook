@@ -17,7 +17,6 @@ export default function SipLog(props) {
             body:JSON.stringify({name,email,password}) //Data which is shared through body...
         });
         const json = await response.json();
-        console.log(json);
         if(json.success){
             //re-direct to 
             localStorage.setItem('token',json.authtoken);
@@ -25,11 +24,11 @@ export default function SipLog(props) {
             props.show_alert("Account Created successfully","success");
         }
         else{
-            props.show_alert("Invalid Credentials","danger");
+            props.show_alert("Invalid Credentials","error");
         }
       }
       else{
-        props.show_alert("Password must be same as Confirm password","Danger");
+        props.show_alert("Password must be same as Confirm password","error");
       }
       
   }
@@ -42,11 +41,11 @@ export default function SipLog(props) {
        <form onSubmit={handleSubmit}>
        <div className="form-group">
             <label htmlFor="name">Name</label>
-            <input type="name" value={credentials.name} className="form-control" name='name'  id="name" placeholder="Name" onChange={onChange}/>
+            <input type="name" value={credentials.name} className="form-control" name='name'  id="name" placeholder="Name" autocomplete="off" onChange={onChange}/>
         </div>
         <div className="form-group">
             <label htmlFor="email">Email address</label>
-            <input type="email" value={credentials.email} className="form-control" name='email' id="email"  aria-describedby="emailHelp" placeholder="Enter email" onChange={onChange}/>
+            <input type="email" value={credentials.email} className="form-control" name='email' id="email"  aria-describedby="emailHelp" autocomplete="off" placeholder="Enter email" onChange={onChange}/>
             <small id="emailHelp" className="form-text text-muted">We'll never share your email with anyone else.</small>
         </div>
         <div className="form-group">

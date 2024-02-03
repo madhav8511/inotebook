@@ -17,7 +17,7 @@ export default function Notes(props) {
         navigate('/login');
       }
 
-    },[show_alert]);
+    },[]);
 
   return (
     <>

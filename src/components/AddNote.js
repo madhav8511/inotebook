@@ -21,15 +21,15 @@ export default function (props) {
       <form className='container my-3'>
         <div className="mb-3">
           <label htmlFor="title">Title</label>
-          <input type="text"   className="form-control" id="title" name='title' placeholder="Enter title" onChange={onChange}/>
+          <input type="text"   className="form-control" id="title" name='title' placeholder="Enter title" autocomplete="off" onChange={onChange}/>
         </div>
         <div className="mb-3">
           <label htmlFor="description">Description</label>
-          <input type="text" className="form-control" id="description" name='description' placeholder="Give description" onChange={onChange}/>
+          <input type="text" className="form-control" id="description" name='description' placeholder="Give description" autocomplete="off" onChange={onChange}/>
         </div>
         <div className="mb-3">
           <label htmlFor="tag">Tag</label>
-          <input type="text" className="form-control" id="Tag" name='tag' placeholder="Give Tag" onChange={onChange}/>
+          <input type="text" className="form-control" id="Tag" name='tag'autocomplete="off" placeholder="Give Tag" onChange={onChange}/>
         </div>
         
         <button type="submit" className="btn btn-primary" onClick={handleClick}>Add a Note</button>

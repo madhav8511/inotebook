@@ -24,7 +24,7 @@ export default function Login(props) {
             navigate('/');
         }
         else{
-            props.show_alert("Invalid Credentials","danger");
+            props.show_alert("Invalid Credentials","error");
         }
     }
 
@@ -37,7 +37,7 @@ export default function Login(props) {
         <form  onSubmit={handleSubmit}>
         <div className="form-group">
             <label htmlFor="email">Email address</label>
-            <input type="email" value={credentials.email} className="form-control" name='email' id="email" onChange={onChange}  aria-describedby="emailHelp" placeholder="Enter email"/>
+            <input type="email" value={credentials.email} className="form-control" name='email' id="email" onChange={onChange} autocomplete="off" aria-describedby="emailHelp" placeholder="Enter email"/>
             <small id="emailHelp" className="form-text text-muted">We'll never share your email with anyone else.</small>
         </div>
         <div className="form-group">
