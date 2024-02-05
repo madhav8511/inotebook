@@ -24,11 +24,11 @@ export default function SipLog(props) {
             props.show_alert("Account Created successfully","success");
         }
         else{
-            props.show_alert("Invalid Credentials","error");
+            props.show_alert("Invalid Credentials","danger");
         }
       }
       else{
-        props.show_alert("Password must be same as Confirm password","error");
+        props.show_alert("Password must be same as Confirm password","danger");
       }
       
   }

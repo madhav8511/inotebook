@@ -66,7 +66,8 @@ exports.loginUser = async (req,res)=>{
         if(!user){
             res.status(400).json({success, error:"Please try to login using correct credentials"});
         }
-        const passwordCompare = await bcrypt.compare(password,user.password);
+        else{
+            const passwordCompare = await bcrypt.compare(password,user.password);
 
         if(!passwordCompare){
             res.status(400).json({success, error:"Please try to login using correct credentials"});
@@ -82,6 +83,8 @@ exports.loginUser = async (req,res)=>{
             res.json({success,authtoken});
         }
 
+        }
+        
     } catch (error) {
         console.error(error.message);
         res.status(500).send("Internal Server error");

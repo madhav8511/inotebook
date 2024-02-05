@@ -24,7 +24,9 @@ export default function Login(props) {
             navigate('/');
         }
         else{
-            props.show_alert("Invalid Credentials","error");
+            props.show_alert("Invalid Credentials","danger");
+            navigate('/signup');
+            props.show_alert("Details Not found you need to SignUp to proceed","warning");
         }
     }
 
